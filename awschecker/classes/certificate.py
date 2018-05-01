@@ -45,7 +45,6 @@ class AWSCertificate():
         self.Status = Status
         self.CertificateTransparencyLoggingPreference = CertificateTransparencyLoggingPreference
         self.Serial = Serial
-        self.Details = parse_arn(self.ARN)
         self.timestamp = format(datetime.datetime.now(pytz.utc)
                                 )
 
