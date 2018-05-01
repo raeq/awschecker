@@ -1,12 +1,7 @@
 
 import pytz
 import logging
-
-
-from .util import parse_arn
 from .arn import AWSARN
-
-
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, TIMESTAMP
 import datetime
