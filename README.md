@@ -12,4 +12,4 @@ Works with Python3.
 ## Requirements
 
 * AWS CLI configured with working credentials.
-* Various python packages which are listed in a <a href=".requirements.txt>requirements.txt</a>
+* Various python packages which are listed in a <a href="requirements.txt">requirements.txt</a>
