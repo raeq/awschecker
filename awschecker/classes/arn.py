@@ -1,4 +1,20 @@
 
+#!/usr/bin/env python
+
+# Copyright 2017, Keith Sharp, <kms@passback.co.uk>
+# Released under the Apache Licence 2.0: https://www.apache.org/licenses/LICENSE-2.0 
+
+# Small script to parse an AWS ARN and get it's separate components:
+#
+#   arn
+#   partition (normally aws)
+#   service
+#   region
+#   account-id
+#   resource or resourcetype/resource or resourcetype:resource
+#
+# https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
+
 from __future__ import print_function
 import logging
 
