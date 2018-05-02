@@ -47,4 +47,4 @@ def check_certs():
         if mycert.Status != "ISSUED":
             logger.warn("Cert %s is not valid.", arn)
         if mycert.CertificateTransparencyLoggingPreference != "Enabled":
-            logger.warn("Cert %s is marked for transparency logging.", arn)
+            logger.warn("On cert %s certificate transparency logging is enabled.", arn)
