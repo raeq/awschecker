@@ -36,29 +36,29 @@ class AWSARN(object):
         return self.arn
 
     def __parse(self):
-        list = self.arn.split(':')
-        if len(list) < 6 or len(list) > 7:
+        arn_list = self.arn.split(':')
+        if len(arn_list) < 6 or len(arn_list) > 7:
             error_exit("Wrong number of components: " + self.arn)
-        if list[0] != 'arn':
+        if arn_list[0] != 'arn':
             error_exit("ARN must start with 'arn': " + self.arn)
 
-        self.partition = list[1]
-        self.service = list[2]
-        self.region = list[3]
-        self.account = list[4]
+        self.partition = arn_list[1]
+        self.service = arn_list[2]
+        self.region = arn_list[3]
+        self.account = arn_list[4]
 
-        if len(list) == 6:
-            reslist = list[5].split('/')
+        if len(arn_list) == 6:
+            reslist = arn_list[5].split('/')
             if len(reslist) == 1:
                 self.resourcetype = ""
-                self.resource = list[5]
+                self.resource = arn_list[5]
             else:
                 self.resourcetype = reslist[0]
                 self.resource = '/'.join(reslist[1:])
 
-        if len(list) == 7:
-            self.resourcetype = list[5]
-            self.resource = list[6]
+        if len(arn_list) == 7:
+            self.resourcetype = arn_list[5]
+            self.resource = arn_list[6]
 
     @property
     def arn(self):
