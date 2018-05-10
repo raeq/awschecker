@@ -7,32 +7,31 @@ from .classes import AWSCertificate
 from .classes import AWSARN
 
 
-def check_certs():
+def check_items():
     """Queries AWS regions for ACM certificates, and then checks them."""
 
     logger = logging.getLogger(__name__)
     logger.info("Begin searching for certificates.")
     s = Session()
-    acm_regions = s.get_available_regions('acm')
-
-    for region in acm_regions:
+    
+    for region in s.get_available_regions('acm'):
         logger.debug("Searching region: %s", region)
-        acmclient = boto3.client('acm', region_name=region)
-        response = acmclient.list_certificates()
+        client = boto3.client('acm', region_name=region)
+        response = client.list_certificates()
 
         for cert in response.get("CertificateSummaryList"):
             logger.debug("The cert header: %s", cert)
 
-            description = acmclient.describe_certificate(
+            description = client.describe_certificate(
                 CertificateArn=cert['CertificateArn'])
 
             mycert = AWSCertificate(description=description['Certificate'])
             logger.debug(mycert)
-            check_one_cert(mycert)
+            check_one_item(mycert)
     logger.info("End searching for certificates.")
 
 
-def check_one_cert(mycert):
+def check_one_item(mycert):
     """Takes a certificate object, and performs validation checks."""
 
     logger = logging.getLogger(__name__)

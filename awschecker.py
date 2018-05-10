@@ -12,6 +12,7 @@ from sqlalchemy import create_engine
 import logging
 import logging.config
 from os import path
+from awschecker import ec2instances
 from awschecker import certs
 
 LOGCONFIG = 'logging_config.ini'
@@ -28,7 +29,8 @@ def main():
     logging.config.fileConfig(log_path())
     logger = logging.getLogger(__name__)
 
-    certs.check_certs()
+    ec2instances.check_items()
+    certs.check_items()
 
 
 if __name__ == "__main__":
