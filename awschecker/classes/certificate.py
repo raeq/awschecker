@@ -1,5 +1,4 @@
 
-import pytz
 import logging
 from .arn import AWSARN
 from .awsobject import AWSObject
@@ -36,7 +35,7 @@ class CertTable(Base):
 
 
 class AWSCertificate(AWSObject):
-    """Represents an AWS ACM certificate object.and"""
+    """Represents an AWS ACM certificate object."""
 
     def __init__(self, description=''):
         """Constructor for an AWS certificate object.and
@@ -62,8 +61,6 @@ class AWSCertificate(AWSObject):
             self.Serial = description['Serial']
             self.Issuer = description['Issuer']
             self.Type = description['Type']
-
-        self.timestamp = format(datetime.datetime.now(pytz.utc))
 
     def disable_transparency_logging(self):
         """Classmethod to disable certificate transparency logging on this certificate"""

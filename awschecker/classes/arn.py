@@ -22,16 +22,33 @@ import logging
 def error_exit(message):
     logger = logging.getLogger(__name__)
     logger.error(message)
-    print(message, file=sys.stderr)
+    print(message)
 
 
 class AWSARN(object):
     """Takes an AWS ARN and splits it into it's components"""
 
-    def __init__(self, arn):
+    def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
-        self.arn = arn
-        self.__parse()
+
+        if len(kwargs) > 0:
+
+            self.logger = logging.getLogger(__name__)
+
+            self.partition = kwargs.get('partition')
+            self.service = kwargs.get('service')
+            self.region = kwargs.get('region')
+            self.account = kwargs.get('account')
+            self.resourcetype = kwargs.get('resourcetype')
+            self.resource = kwargs.get('resource')
+
+            _arn = [self.partition, self.service,
+                    self.region, self.account,
+                    self.resourcetype + '/' + self.resource]
+            self.arn = ":".join(_arn)
+        else:
+            self.arn = args[0]
+            self.__parse()
 
     def __parse(self):
         arn_list = self.arn.split(':')
