@@ -17,9 +17,7 @@ def main():
     logger = logging.getLogger(__name__)
 
 
-    logger.debug ("Begin processing.")
     certs.check_certs()
-    logger.debug("End processing")
 
 
 if __name__ == "__main__":main()

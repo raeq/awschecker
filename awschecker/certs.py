@@ -7,11 +7,10 @@ from .classes import AWSCertificate
 from .classes import AWSARN
 
 
-def find_certs():
+def check_certs():
 
     logger = logging.getLogger(__name__)
-    logger.debug("Begin searching for certificates.")
-    all_certs = {}
+    logger.info("Begin searching for certificates.")
     s = Session()
     acm_regions = s.get_available_regions('acm')
 
@@ -26,26 +25,19 @@ def find_certs():
             description = acmclient.describe_certificate(
                 CertificateArn=cert['CertificateArn'])
 
-            mycert = AWSCertificate(description['Certificate']['CertificateArn'],
-                                    description['Certificate']['DomainName'],
-                                    description['Certificate']['Status'],
-                                    description['Certificate']['Options']['CertificateTransparencyLoggingPreference'],
-                                    description['Certificate']['Serial']
-                                    )
-            logger.info(mycert)
-            all_certs[mycert.ARN] = mycert
-
-    logger.debug(all_certs)
-    return all_certs
+            mycert = AWSCertificate(description['Certificate'])
+            logger.debug(mycert)
+            check_one_cert(mycert)
+    logger.info("End searching for certificates.")
 
 
-def check_certs():
+
+def check_one_cert(mycert):
     logger = logging.getLogger(__name__)
-    all_arns = find_certs()
-    for arn in all_arns:
-        mycert = all_arns[arn]
-        if mycert.Status != "ISSUED":
-            logger.warn("Cert %s is not valid (%s).", arn, mycert.Status)
-        if mycert.CertificateTransparencyLoggingPreference != "Enabled":
-            logger.warn(
-                "On cert %s certificate transparency logging is enabled.", arn)
+
+    if mycert.Status != "ISSUED":
+        logger.warn("Cert %s is not valid (%s).",
+                    mycert.ARN.arn, mycert.Status)
+    if mycert.CertificateTransparencyLoggingPreference != "Enabled":
+        logger.warn(
+            "On cert %s certificate transparency logging is enabled.", mycert.ARN.arn)

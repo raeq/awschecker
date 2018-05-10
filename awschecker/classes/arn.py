@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 # Copyright 2017, Keith Sharp, <kms@passback.co.uk>
-# Released under the Apache Licence 2.0: https://www.apache.org/licenses/LICENSE-2.0 
+# Released under the Apache Licence 2.0: https://www.apache.org/licenses/LICENSE-2.0
 
 # Small script to parse an AWS ARN and get it's separate components:
 #
@@ -31,9 +31,6 @@ class AWSARN(object):
     def __init__(self, arn):
         self.arn = arn
         self.__parse()
-
-    def __str__(self):
-        return self.arn
 
     def __parse(self):
         arn_list = self.arn.split(':')
@@ -116,6 +113,5 @@ class AWSARN(object):
     def resource(self, resource):
         self.__resource = resource
 
-    
     def __repr__(self):
         return str(self.__dict__)

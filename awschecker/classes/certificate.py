@@ -2,6 +2,7 @@
 import pytz
 import logging
 from .arn import AWSARN
+from .awsobject import AWSObject
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, TIMESTAMP
 import datetime
@@ -32,23 +33,17 @@ class CertTable(Base):
             self.Status, self.Serial)
 
 
-class AWSCertificate():
+class AWSCertificate(AWSObject):
 
-    def __init__(self, pARN, DomainName, Status, CertificateTransparencyLoggingPreference, Serial):
-        self.ARN = pARN
-        self.DomainName = DomainName
-        self.Status = Status
-        self.CertificateTransparencyLoggingPreference = CertificateTransparencyLoggingPreference
-        self.Serial = Serial
-        self.timestamp = format(datetime.datetime.now(pytz.utc)
-                                )
+    def __init__(self, description):
+        AWSObject.__init__(self, description['CertificateArn'])
 
-        myARN = AWSARN(self.ARN)
-        self.Details = myARN
-
-        url = "https://{}.console.aws.amazon.com/{}/home?region={}#/?id={}"
-        self.url = url.format(
-            myARN.region, myARN.service, myARN.region, myARN.resource)
+        self.DomainName = description['DomainName']
+        self.Status = description['Status']
+        self.CertificateTransparencyLoggingPreference = description[
+            'Options']['CertificateTransparencyLoggingPreference']
+        self.Serial = description['Serial']
+        self.timestamp = format(datetime.datetime.now(pytz.utc))
 
     def __repr__(self):
         return str(self.__dict__)
