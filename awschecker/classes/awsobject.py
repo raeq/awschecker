@@ -8,6 +8,11 @@ import datetime
 
 
 class AWSObject():
+    """
+    Superclass for all AWS object representations.
+    Contains an see:ARN object, and has a URL attribute.
+    """
+
     def __init__(self, pARN):
         self.logger = logging.getLogger(__name__)
 

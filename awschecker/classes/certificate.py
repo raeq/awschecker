@@ -36,10 +36,17 @@ class CertTable(Base):
 
 
 class AWSCertificate(AWSObject):
+    """Represents an AWS ACM certificate object.and"""
 
-    def __init__(self, description):
+    def __init__(self, description=''):
+        """Constructor for an AWS certificate object.and
+            Args:
+                description: String of the JSON object returned from describe_certificate
+            Returns:
+                An AWSCertificate object instantiated from the raw JSON.
+        """
         self.logger = logging.getLogger(__name__)
-        AWSObject.__init__(self, description['CertificateArn'])
+        super(__class__,self).__init__(description['CertificateArn'])
 
         self.DomainName = description['DomainName']
         self.Status = description['Status']
@@ -59,6 +66,7 @@ class AWSCertificate(AWSObject):
         self.timestamp = format(datetime.datetime.now(pytz.utc))
 
     def disable_transparency_logging(self):
+        """Classmethod to disable certificate transparency logging on this certificate"""
 
         if self.Issuer == 'Amazon' and self.Type == 'AMAZON_ISSUED':
 
@@ -77,7 +85,7 @@ class AWSCertificate(AWSObject):
                 "Cert %s had cert tran logging disable successfully", self.url)
 
     def enable_transparency_logging(self):
-
+        """Classmethod to enable certificate transparency logging on this certificate"""
         if self.Issuer == 'Amazon' and self.Type == 'AMAZON_ISSUED':
 
             s = Session()

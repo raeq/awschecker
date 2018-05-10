@@ -8,6 +8,7 @@ from .classes import AWSARN
 
 
 def check_certs():
+    """Queries AWS regions for ACM certificates, and then checks them."""
 
     logger = logging.getLogger(__name__)
     logger.info("Begin searching for certificates.")
@@ -25,13 +26,15 @@ def check_certs():
             description = acmclient.describe_certificate(
                 CertificateArn=cert['CertificateArn'])
 
-            mycert = AWSCertificate(description['Certificate'])
+            mycert = AWSCertificate(description=description['Certificate'])
             logger.debug(mycert)
             check_one_cert(mycert)
     logger.info("End searching for certificates.")
 
 
 def check_one_cert(mycert):
+    """Takes a certificate object, and performs validation checks."""
+
     logger = logging.getLogger(__name__)
 
     if mycert.Status.upper() != 'ISSUED':
@@ -40,8 +43,8 @@ def check_one_cert(mycert):
     elif mycert.CertificateTransparencyLoggingPreference.lower() == 'enabled':
         logger.warn(
             "Cert %s certificate transparency logging is enabled.", mycert.url)
-        #mycert.disable_transparency_logging()
+        # mycert.disable_transparency_logging()
     else:
         logger.info(
             "Cert %s certificate transparency logging is disabled.", mycert.url)
-        #mycert.enable_transparency_logging()
+        # mycert.enable_transparency_logging()
