@@ -40,6 +40,8 @@ def check_one_cert(mycert):
     elif mycert.CertificateTransparencyLoggingPreference.lower() == 'enabled':
         logger.warn(
             "Cert %s certificate transparency logging is enabled.", mycert.url)
+        #mycert.disable_transparency_logging()
     else:
         logger.info(
             "Cert %s certificate transparency logging is disabled.", mycert.url)
+        #mycert.enable_transparency_logging()

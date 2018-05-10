@@ -29,6 +29,7 @@ class AWSARN(object):
     """Takes an AWS ARN and splits it into it's components"""
 
     def __init__(self, arn):
+        self.logger = logging.getLogger(__name__)
         self.arn = arn
         self.__parse()
 

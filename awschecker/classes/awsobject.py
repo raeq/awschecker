@@ -9,6 +9,7 @@ import datetime
 
 class AWSObject():
     def __init__(self, pARN):
+        self.logger = logging.getLogger(__name__)
 
         self.ARN = AWSARN(pARN)
         url = "https://{}.console.aws.amazon.com/{}/home?region={}#/?id={}"
