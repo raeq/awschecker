@@ -42,7 +42,12 @@ class AWSCertificate(AWSObject):
         self.Status = description['Status']
         self.CertificateTransparencyLoggingPreference = description[
             'Options']['CertificateTransparencyLoggingPreference']
-        self.Serial = description['Serial']
+
+        if self.Status == 'PENDING_VALIDATION':
+            self.Serial = ''
+        else:
+            self.Serial = description['Serial']
+
         self.timestamp = format(datetime.datetime.now(pytz.utc))
 
     def __repr__(self):
