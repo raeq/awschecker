@@ -31,16 +31,15 @@ def check_certs():
     logger.info("End searching for certificates.")
 
 
-
 def check_one_cert(mycert):
     logger = logging.getLogger(__name__)
 
-    if mycert.Status != "ISSUED":
+    if mycert.Status.upper() != 'ISSUED':
         logger.warn("Cert %s is not issued (%s).",
-                    mycert.ARN.arn, mycert.Status)
-    elif mycert.CertificateTransparencyLoggingPreference != "Enabled":
+                    mycert.url, mycert.Status)
+    elif mycert.CertificateTransparencyLoggingPreference.lower() == 'enabled':
         logger.warn(
-            "On cert %s certificate transparency logging is enabled.", mycert.url)
+            "Cert %s certificate transparency logging is enabled.", mycert.url)
     else:
-        logger.warn(
-            "On cert %s certificate transparency logging is disabled.", mycert.url)
+        logger.info(
+            "Cert %s certificate transparency logging is disabled.", mycert.url)
