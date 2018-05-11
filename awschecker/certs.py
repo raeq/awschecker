@@ -6,6 +6,7 @@ import logging
 from .classes import AWSCertificate
 from .classes import AWSARN
 from .decorator_logging import logged
+import constants
 
 
 @logged(logging.DEBUG)
@@ -13,10 +14,10 @@ def check_items():
     """Queries AWS regions for ACM certificates, and then checks them."""
 
     logger = logging.getLogger(__name__)
-    logger.info("Begin searching for certificates.")
+    logger.debug("Begin searching for certificates.")
     s = Session()
     
-    for region in s.get_available_regions('acm'):
+    for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
         client = boto3.client('acm', region_name=region)
         response = client.list_certificates()
@@ -30,7 +31,7 @@ def check_items():
             mycert = AWSCertificate(description=description['Certificate'])
             logger.debug(mycert)
             check_one_item(mycert)
-    logger.info("End searching for certificates.")
+    logger.debug("End searching for certificates.")
 
 
 @logged(logging.DEBUG)

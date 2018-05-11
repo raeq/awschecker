@@ -15,6 +15,7 @@ def logged(func, loglevel=logging.DEBUG, name=None, message=''):
         @wraps(func)
         def wrapper(*args, **kwargs):
 
+            #use the caller's logger
             logger = logging.getLogger(loggername)
             logger.log(loglevel, logmsg)
             return func(*args, **kwargs)

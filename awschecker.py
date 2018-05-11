@@ -15,14 +15,14 @@ from os import path
 from awschecker import ec2instances
 from awschecker import certs
 from awschecker.decorator_logging import logged
+import constants
 
 
 def log_path():
     """Gets the OS and environment independent path to the logger configuration file."""
-    log_file_path = path.join(path.dirname(path.abspath(__file__)), LOGCONFIG)
+    log_file_path = path.join(path.dirname(path.abspath(__file__)), constants.LOGCONFIG)
     return log_file_path
 
-LOGCONFIG = 'logging_config.ini'
 logging.config.fileConfig(log_path())
 logger = logging.getLogger(__name__)    
 

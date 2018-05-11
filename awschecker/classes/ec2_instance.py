@@ -30,4 +30,4 @@ class EC2Instance(AWSObject):
                                         region=region,
                                         account=account,
                                         resourcetype=resourcetype, resource=resource)
-        self.logger.info(self)
+        self.logger.debug(self)
