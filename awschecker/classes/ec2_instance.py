@@ -7,8 +7,10 @@ from sqlalchemy import Column, Integer, String, TIMESTAMP
 import datetime
 from boto3.session import Session
 import boto3
+from ..decorator_logging import logged
 
 
+@logged(logging.DEBUG)
 class EC2Instance(AWSObject):
     """Represents an AWS EC2 Instance object."""
 
@@ -23,10 +25,9 @@ class EC2Instance(AWSObject):
         self.logger = logging.getLogger(__name__)
         self.description=description
 
-        print(resource)
-
         super(__class__, self).__init__(partition=partition,
                                         service=service,
                                         region=region,
                                         account=account,
                                         resourcetype=resourcetype, resource=resource)
+        self.logger.info(self)

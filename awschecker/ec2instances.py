@@ -5,7 +5,7 @@ from boto3.session import Session
 import logging
 from .classes import EC2Instance
 from .classes import AWSARN
-
+from .decorator_logging import logged
 
 def check_items():
     """Queries AWS regions for ACM certificates, and then checks them."""
@@ -31,6 +31,7 @@ def check_items():
     logger.info("End searching for instances.")
 
 
+@logged(logging.DEBUG)
 def check_one_item(anitem):
     """Takes a certificate object, and performs validation checks."""
 

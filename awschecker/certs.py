@@ -5,8 +5,10 @@ from boto3.session import Session
 import logging
 from .classes import AWSCertificate
 from .classes import AWSARN
+from .decorator_logging import logged
 
 
+@logged(logging.DEBUG)
 def check_items():
     """Queries AWS regions for ACM certificates, and then checks them."""
 
@@ -31,6 +33,7 @@ def check_items():
     logger.info("End searching for certificates.")
 
 
+@logged(logging.DEBUG)
 def check_one_item(mycert):
     """Takes a certificate object, and performs validation checks."""
 
