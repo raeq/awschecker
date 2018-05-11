@@ -1,14 +1,10 @@
 """
 awschecker.pyc
 Inspects an AWS account for ACM certificates.
-Reports on invalid certificates, pending certificates, and certificates with 
+Reports on invalid certificates, pending certificates, and certificates with
 certificate transparency enabled.
 """
 
-
-from boto3.session import Session
-import sqlite3
-from sqlalchemy import create_engine
 import logging
 import logging.config
 from os import path
@@ -24,12 +20,11 @@ def log_path():
     return log_file_path
 
 logging.config.fileConfig(log_path())
-logger = logging.getLogger(__name__)    
+LOGGER = logging.getLogger(__name__)
 
 @logged(logging.DEBUG)
 def main():
     """Applicationentry point."""
-    logger = logging.getLogger(__name__)    
 
     ec2instances.check_items()
     certs.check_items()

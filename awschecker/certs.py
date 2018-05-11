@@ -1,12 +1,9 @@
 
-import boto3
-#from awschecker.classes import certificate
-from boto3.session import Session
 import logging
-from .classes import AWSCertificate
-from .classes import AWSARN
-from .decorator_logging import logged
+import boto3
 import constants
+from .classes import AWSCertificate
+from .decorator_logging import logged
 
 
 @logged(logging.DEBUG)
@@ -15,8 +12,7 @@ def check_items():
 
     logger = logging.getLogger(__name__)
     logger.debug("Begin searching for certificates.")
-    s = Session()
-    
+
     for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
         client = boto3.client('acm', region_name=region)

@@ -1,12 +1,6 @@
 
 import logging
-from .arn import AWSARN
 from .awsobject import AWSObject
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, TIMESTAMP
-import datetime
-from boto3.session import Session
-import boto3
 from ..decorator_logging import logged
 
 
@@ -23,7 +17,7 @@ class EC2Instance(AWSObject):
                 An EC2Instance object instantiated from the raw JSON.
         """
         self.logger = logging.getLogger(__name__)
-        self.description=description
+        self.description = description
 
         super(__class__, self).__init__(partition=partition,
                                         service=service,

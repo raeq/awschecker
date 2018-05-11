@@ -1,10 +1,8 @@
-from functools import wraps, partial
-from pprint import pprint
-from os import path
+from functools import wraps
 import logging
 
 
-def logged(func, loglevel=logging.DEBUG, name=None, message=''):
+def logged(loglevel=logging.DEBUG, name=None, message=''):
     """Wrap functions with a logger"""
 
     def decorate(func):
