@@ -8,6 +8,7 @@ import datetime
 from boto3.session import Session
 import boto3
 from ..decorator_logging import logged
+import constants
 
 Base = declarative_base()
 
@@ -63,7 +64,7 @@ class AWSCertificate(AWSObject):
             self.Issuer = description['Issuer']
             self.Type = description['Type']
 
-        self.logger.info(self)
+        self.logger.debug(self)
 
 
     def disable_transparency_logging(self):
