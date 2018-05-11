@@ -7,12 +7,13 @@ from sqlalchemy import Column, Integer, String, TIMESTAMP
 import datetime
 from boto3.session import Session
 import boto3
+from ..decorator_logging import logged
 
 Base = declarative_base()
 
 # arn #timestamp #region #account #boto3client #metdata
 
-
+@logged
 class CertTable(Base):
     logger = logging.getLogger(__name__)
     __tablename__ = 'certificates'
@@ -61,6 +62,9 @@ class AWSCertificate(AWSObject):
             self.Serial = description['Serial']
             self.Issuer = description['Issuer']
             self.Type = description['Type']
+
+        self.logger.info(self)
+
 
     def disable_transparency_logging(self):
         """Classmethod to disable certificate transparency logging on this certificate"""

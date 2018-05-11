@@ -14,8 +14,7 @@ import logging.config
 from os import path
 from awschecker import ec2instances
 from awschecker import certs
-
-LOGCONFIG = 'logging_config.ini'
+from awschecker.decorator_logging import logged
 
 
 def log_path():
@@ -23,14 +22,19 @@ def log_path():
     log_file_path = path.join(path.dirname(path.abspath(__file__)), LOGCONFIG)
     return log_file_path
 
+LOGCONFIG = 'logging_config.ini'
+logging.config.fileConfig(log_path())
+logger = logging.getLogger(__name__)    
 
+@logged(logging.DEBUG)
 def main():
     """Applicationentry point."""
-    logging.config.fileConfig(log_path())
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(__name__)    
 
     ec2instances.check_items()
     certs.check_items()
+
+    logging.shutdown()
 
 
 if __name__ == "__main__":
