@@ -18,7 +18,8 @@
 			"folder_exclude_patterns":
 			[
 				"__pycache__",
-				"classes"
+				"classes",
+				"app"
 			],
 			"path": "awschecker"
 		},
@@ -28,10 +29,29 @@
 				"__pycache__"
 			],
 			"path": "./awschecker/classes"
+		},
+		{
+			"folder_exclude_patterns":
+			[
+				"__pycache__"
+			],
+			"path": "./webapp"
+		},
+		{
+			"folder_exclude_patterns":
+			[
+				"__pycache__",
+				"venv",
+				"awschecker",
+				"webapp"
+			],
+			"name": "root",
+			"path": "./"
 		}
 	],
 	"settings":
 	{
 		"tab_size": 4
-	}
+	},
+	"virtualenv": "/Users/quinnri2/awschecker/venv"
 }
