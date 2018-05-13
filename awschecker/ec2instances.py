@@ -5,6 +5,7 @@ Can optionally check them against rules.
 import logging
 import boto3
 import constants
+from pprint import pprint
 from .decorator_logging import logged
 from .classes import EC2Instance
 
@@ -12,8 +13,9 @@ from .classes import EC2Instance
 @logged(logging.DEBUG)
 def check_items():
     """Entry point. Is called to both gather objects and to check them."""
-    for cert in gather_instances():
-        check_one_item(cert)
+    map(check_one_item, gather_instances())
+    for i in gather_instances():
+        check_one_item(i)
 
 
 @logged(logging.DEBUG)
@@ -22,21 +24,14 @@ def gather_instances():
 
     logger = logging.getLogger(__name__)
     logger.debug("Begin searching for instances.")
-    allinstances = []
 
+    allinstances = []
     for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
 
-        client = boto3.client('ec2', region_name=region)
-        ec2 = boto3.resource('ec2',region_name=region)
-        response_iterator = client.get_paginator(
-            'describe_instances').paginate()
-
-        for p in response_iterator:
-            for i in p['Reservations']:
-                for j in i['Instances']:
-                    myinst = ec2.Instance(j['InstanceId'])
-                    allinstances.append(myinst)
+        ec2 = boto3.resource('ec2', region_name=region)
+        for i in (ec2.instances.all()):
+            allinstances.append(i)
 
     logger.debug("End searching for instances.")
     return allinstances

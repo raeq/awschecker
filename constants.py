@@ -1,6 +1,6 @@
-
-
-
+"""
+This file contains some project wide, global constants.
+"""
 LOGCONFIG = 'logging_config.ini'
 
 # This is the list of regions to check

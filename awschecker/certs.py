@@ -28,7 +28,8 @@ def gather_certificates():
     for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
         client = boto3.client('acm', region_name=region)
-        response_iterator = client.get_paginator('list_certificates').paginate()
+        response_iterator = client.get_paginator(
+            'list_certificates').paginate()
 
         for p in response_iterator:
             for i in p['CertificateSummaryList']:
