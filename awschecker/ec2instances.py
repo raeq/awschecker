@@ -47,4 +47,3 @@ def check_one_item(anitem):
     """Takes an EC2 instance object, and performs validation checks."""
 
     logger = logging.getLogger(__name__)
-    logger.info(anitem)
