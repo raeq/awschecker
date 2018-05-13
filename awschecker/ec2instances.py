@@ -26,17 +26,17 @@ def gather_instances():
 
     for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
-        client = boto3.client('ec2', region_name=region)
-        response = client.describe_instances()
 
-        for reservation in response.get("Reservations"):
-            for instance in reservation['Instances']:
-                myinst = EC2Instance(description=instance, partition='aws',
-                                     service='ec2', region=region,
-                                     account=boto3.client(
-                                         'sts').get_caller_identity().get('Account'),
-                                     resourcetype='instance', resource=instance['InstanceId'])
-                allinstances.append(myinst)
+        client = boto3.client('ec2', region_name=region)
+        ec2 = boto3.resource('ec2',region_name=region)
+        response_iterator = client.get_paginator(
+            'describe_instances').paginate()
+
+        for p in response_iterator:
+            for i in p['Reservations']:
+                for j in i['Instances']:
+                    myinst = ec2.Instance(j['InstanceId'])
+                    allinstances.append(myinst)
 
     logger.debug("End searching for instances.")
     return allinstances
