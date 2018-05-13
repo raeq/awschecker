@@ -1,17 +1,28 @@
-
+"""
+Gathers all ACM certificates from an account.
+Can optionally check them against rules.
+"""
 import logging
 import boto3
 import constants
-from .classes import AWSCertificate
 from .decorator_logging import logged
+from .classes import AWSCertificate
 
 
 @logged(logging.DEBUG)
 def check_items():
+    """Entry point. Is called to both gather objects and to check them."""
+    for cert in gather_certificates():
+        check_one_item(cert)
+
+
+@logged(logging.DEBUG)
+def gather_certificates():
     """Queries AWS regions for ACM certificates, and then checks them."""
 
     logger = logging.getLogger(__name__)
     logger.debug("Begin searching for certificates.")
+    certs = []
 
     for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
@@ -25,9 +36,9 @@ def check_items():
                 CertificateArn=cert['CertificateArn'])
 
             mycert = AWSCertificate(description=description['Certificate'])
-            logger.debug(mycert)
-            check_one_item(mycert)
+            certs.append(mycert)
     logger.debug("End searching for certificates.")
+    return certs
 
 
 @logged(logging.DEBUG)

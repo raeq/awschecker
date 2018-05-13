@@ -1,6 +1,7 @@
 # AWS Checker #
 
-# Checks a single account for AWS Certificate Transparency Logging enabled, and outputs a warning to the console.
+## Features
+1. Checks all the certificates single account for AWS Certificate Transparency Logging enabled, and outputs a warning to the console.
 
 Outputs to std.out when it finds problematic certs.
 
@@ -8,6 +9,7 @@ Outputs to std.out when it finds problematic certs.
 Works with Python3. 
 
 ## Work In progress
+
 
 ## Requirements
 

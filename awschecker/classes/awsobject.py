@@ -37,7 +37,5 @@ class AWSObject(object):
         self.url = url.format(
             self.ARN.region, self.ARN.service, self.ARN.region, self.ARN.resource)
 
-
-
     def __repr__(self):
         return str(self.__dict__)

@@ -23,7 +23,7 @@ class AWSCertificate(AWSObject):
         self.CertificateTransparencyLoggingPreference = description[
             'Options']['CertificateTransparencyLoggingPreference']
 
-        if self.Status == 'PENDING_VALIDATION':
+        if self.Status in ['PENDING_VALIDATION','VALIDATION_TIMED_OUT']:
             self.Serial = ''
             self.Issuer = ''
             self.Type = ''
