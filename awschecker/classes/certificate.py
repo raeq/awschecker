@@ -42,14 +42,14 @@ class AWSCertificate(AWSObject):
         logging on this certificate"""
 
         if self.Issuer == 'Amazon' and self.Type == 'AMAZON_ISSUED':
-            self.logger.warn(
+            self.logger.info(
                 "Cert %s had cert tran logging disable successfully", self.url)
 
     def enable_transparency_logging(self):
         """Classmethod to enable certificate transparency logging on
         this certificate"""
         if self.Issuer == 'Amazon' and self.Type == 'AMAZON_ISSUED':
-            self.logger.warn(
+            self.logger.info(
                 "Cert %s had cert tran logging enabled successfully", self.url)
 
     def __repr__(self):

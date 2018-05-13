@@ -3,6 +3,7 @@ Gathers all ACM certificates from an account.
 Can optionally check them against rules.
 """
 import logging
+from pprint import pprint
 import boto3
 import constants
 from .decorator_logging import logged
@@ -27,16 +28,15 @@ def gather_certificates():
     for region in constants.PREFERRED_REGIONS:
         logger.debug("Searching region: %s", region)
         client = boto3.client('acm', region_name=region)
-        response = client.list_certificates()
+        response_iterator = client.get_paginator('list_certificates').paginate()
 
-        for cert in response.get("CertificateSummaryList"):
-            logger.debug("The cert header: %s", cert)
+        for p in response_iterator:
+            for i in p['CertificateSummaryList']:
+                c = client.describe_certificate(
+                    CertificateArn=i['CertificateArn'])
 
-            description = client.describe_certificate(
-                CertificateArn=cert['CertificateArn'])
-
-            mycert = AWSCertificate(description=description['Certificate'])
-            certs.append(mycert)
+                mycert = AWSCertificate(description=c['Certificate'])
+                certs.append(mycert)
     logger.debug("End searching for certificates.")
     return certs
 
