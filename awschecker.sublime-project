@@ -51,7 +51,12 @@
 	],
 	"settings":
 	{
-		"tab_size": 4
-	},
-	"virtualenv": "/Users/quinnri2/awschecker/venv"
+		"anaconda_linting": true,
+		"anaconda_linting_behaviour": "always",
+		"pep257": false,
+		"python_interpreter": "python3",
+		"test_command": "python3 -m unittest discover",
+		"use_pylint": false,
+		"validate_imports": true
+	}
 }
