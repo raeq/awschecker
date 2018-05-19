@@ -28,7 +28,7 @@ def gather_instances():
         logger.debug("Searching region: %s", region)
 
         client = boto3.client('ec2', region_name=region)
-        ec2 = boto3.resource('ec2',region_name=region)
+        ec2 = boto3.resource('ec2', region_name=region)
         response_iterator = client.get_paginator(
             'describe_instances').paginate()
 
